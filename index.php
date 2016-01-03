@@ -1,4 +1,10 @@
+
+
 <!doctype html>
+<?php
+    session_start();
+
+?>
 <html class="no-js" lang="en">
   <head>
     <meta charset="utf-8">
@@ -21,14 +27,19 @@
         </div>
         <div class="small-8 columns login-dropdown">
           <ul class="menu">
-            <li>
+
+          <?php 
+
+			if(!isset($_SESSION['user_email'])) {
+			?>
+			<li>
               <a class="dropdown-button" href="#">Login</a>
               <ul class="login-form">
                 <li>
-                  <form action="" method="post">
-                    <input type="text" name="" value="" placeholder="Username">
-                    <input type="password" name="" value="" placeholder="Password">
-                    <input type="submit" name="" value="Login">
+                  <form action="login.php" method="post">
+                    <input type="text" name="username" value="" placeholder="Username">
+                    <input type="password" name="password" value="" placeholder="Password">
+                    <input type="submit" name="login" value="Login">
                   </form>
                   <hr>
                   <p class="pass-reset text-center">
@@ -36,7 +47,22 @@
                   </p>
                 </li>
               </ul>
-            </li>
+            </li>	
+			
+
+			<?php 
+			}else{
+				?>
+			<li class="logout"><a href="logout.php">Logout</a></li>
+			<?php 
+
+			}
+          ?>
+            
+
+            
+
+
           </ul>
         </div>
       </header>

@@ -4,11 +4,7 @@
 session_start();
 
 $con = mysqli_connect("localhost","root","","inlab4");
-$sel_user = "select * from t_clientes where ft_nomeutilizador='$user' AND ft_password='$pass'";
-
-var_dump($_SESSION['id']);
-var_dump("expression");
-
+$sql = 'SELECT t_amostras.fn_id , fd_recepcao , t_produtos.ft_descricao AS produto ,t_estados.ft_descricao AS estado FROM t_amostras INNER JOIN t_estados ON t_amostras.ft_id_estado = t_estados.ft_id INNER JOIN t_produtos ON t_amostras.fn_id_produto = t_produtos.fn_id where t_amostras.fn_id_cliente = '. $_SESSION["id"].' order by fd_recepcao';
 ?>
 <html class="no-js" lang="en">
   <head>
@@ -61,73 +57,30 @@ var_dump("expression");
               <th width="200">Código</th>
               <th width="200">Data</th>
               <th width="200">Produto</th>
-              <th width="200">Nome</th>
               <th width="200">Acções</th>
             </tr>
           </thead>
           <tbody>
+<?php 
+
+$run_user = mysqli_query($con, $sql);
+
+  while ($rows = $run_user->fetch_array()) {
+    if($rows['estado'] == 'Em Progresso'){
+      echo '<tr><td><span class="bullet-yellow"></span> '.$rows['estado'].'</td><td>'.$rows['fn_id'].'</td><td>'.$rows['fd_recepcao'].'</td><td>'.$rows['produto'].'</td><td><ul><li><a href="#"><img src="images/icons/icon-print.png" alt="" /></a></li><li><a href="#"><img src="images/icons/icon-eye.png" alt="" /></a></li><li><a href="#"><img src="images/icons/icon-save.png" alt="" /></a></li></ul></td></tr>';
+    
+    }
+ if($rows['estado'] == 'Completo'){
+      echo '<tr><td><span class="bullet-green"></span> '.$rows['estado'].'</td><td>'.$rows['fn_id'].'</td><td>'.$rows['fd_recepcao'].'</td><td>'.$rows['produto'].'</td><td><ul><li><a href="#"><img src="images/icons/icon-print.png" alt="" /></a></li><li><a href="#"><img src="images/icons/icon-eye.png" alt="" /></a></li><li><a href="#"><img src="images/icons/icon-save.png" alt="" /></a></li></ul></td></tr>';
+    }
+  }
 
 
+?>
 
-            <tr>
-              <td><span class="bullet-green"></span> Completo</td>
-              <td>2015 - 10543</td>
-              <td>11-11-2015</td>
-              <td>Água mineral_fonte</td>
-              <td>AG_água mineral</td>
-              <td>
-                <ul>
-                  <li><a href="#"><img src="images/icons/icon-print.png" alt="" /></a></li>
-                  <li><a href="#"><img src="images/icons/icon-eye.png" alt="" /></a></li>
-                  <li><a href="#"><img src="images/icons/icon-save.png" alt="" /></a></li>
-                </ul>
-              </td>
-            </tr>
 
-            <tr class="disabled">
-              <td><span class="bullet-pink"></span> Indisponível</td>
-              <td>2015 - 10543</td>
-              <td>11-11-2015</td>
-              <td>Água mineral_fonte</td>
-              <td>AG_água mineral</td>
-              <td>
-                <ul>
-                  <li><img src="images/icons/icon-print.png" alt="" /></li>
-                  <li><img src="images/icons/icon-eye.png" alt="" /></li>
-                  <li><img src="images/icons/icon-save.png" alt="" /></li>
-                </ul>
-              </td>
-            </tr>
+            
 
-            <tr>
-              <td><span class="bullet-yellow"></span> Parcial</td>
-              <td>2015 - 10543</td>
-              <td>11-11-2015</td>
-              <td>Água mineral_fonte</td>
-              <td>AG_água mineral</td>
-              <td>
-                <ul>
-                  <li><a href="#"><img src="images/icons/icon-print.png" alt="" /></a></li>
-                  <li><a href="#"><img src="images/icons/icon-eye.png" alt="" /></a></li>
-                  <li><a href="#"><img src="images/icons/icon-save.png" alt="" /></a></li>
-                </ul>
-              </td>
-            </tr>
-
-            <tr>
-              <td><span class="bullet-green"></span> Completo</td>
-              <td>2015 - 10543</td>
-              <td>11-11-2015</td>
-              <td>Água mineral_fonte</td>
-              <td>AG_água mineral</td>
-              <td>
-                <ul>
-                  <li><a href="#"><img src="images/icons/icon-print.png" alt="" /></a></li>
-                  <li><a href="#"><img src="images/icons/icon-eye.png" alt="" /></a></li>
-                  <li><a href="#"><img src="images/icons/icon-save.png" alt="" /></a></li>
-                </ul>
-              </td>
-            </tr>
 
           </tbody>
         </table>
