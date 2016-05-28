@@ -4,7 +4,8 @@
 session_start();
 
 $con = mysqli_connect("localhost","root","","inlab4");
-$sql = 'SELECT t_amostras.fn_id , fd_recepcao , t_produtos.ft_descricao AS produto ,t_estados.ft_descricao AS estado FROM t_amostras INNER JOIN t_estados ON t_amostras.ft_id_estado = t_estados.ft_id INNER JOIN t_produtos ON t_amostras.fn_id_produto = t_produtos.fn_id where t_amostras.fn_id_cliente = '. $_SESSION["id"].' order by fd_recepcao';
+$sql = 'SELECT t_amostras.fn_id , fd_recepcao , t_produtos.ft_descricao AS produto ,t_estados.ft_descricao AS estado FROM t_amostras INNER JOIN t_estados ON t_amostras.ft_id_estado = t_estados.fn_id INNER JOIN t_produtos ON t_amostras.fn_id_produto = t_produtos.fn_id where t_amostras.fn_id_cliente = '. $_SESSION["id"].' order by fd_recepcao';
+
 ?>
 <html class="no-js" lang="en">
   <head>
@@ -19,7 +20,7 @@ $sql = 'SELECT t_amostras.fn_id , fd_recepcao , t_produtos.ft_descricao AS produ
     <header id="main-header">
       <div class="top-border"></div>
       <div class="row">
-        <div class="small-16 medium-4 large-5 columns">
+        <div class="small-16 medium-4 large-5 columns"> 
           <a href="#bio">
             <img src="images/logo-small.png" alt="" class="logo-small"/>
           </a>
@@ -67,11 +68,11 @@ $run_user = mysqli_query($con, $sql);
 
   while ($rows = $run_user->fetch_array()) {
     if($rows['estado'] == 'Em Progresso'){
-      echo '<tr><td><span class="bullet-yellow"></span> '.$rows['estado'].'</td><td>'.$rows['fn_id'].'</td><td>'.$rows['fd_recepcao'].'</td><td>'.$rows['produto'].'</td><td><ul><li><a href="#"><img src="images/icons/icon-print.png" alt="" /></a></li><li><a href="#"><img src="images/icons/icon-eye.png" alt="" /></a></li><li><a href="#"><img src="images/icons/icon-save.png" alt="" /></a></li></ul></td></tr>';
+      echo '<tr><td><span class="bullet-yellow"></span> '.$rows['estado'].'</td><td>'.$rows['fn_id'].'</td><td>'.$rows['fd_recepcao'].'</td><td>'.$rows['produto'].'</td><td><ul><li><a href="getrelatorio.php?id='. $rows['fn_id'] .'"><img src="images/icons/icon-save.png" alt="" /></a></li></ul></td></tr>';
     
     }
  if($rows['estado'] == 'Completo'){
-      echo '<tr><td><span class="bullet-green"></span> '.$rows['estado'].'</td><td>'.$rows['fn_id'].'</td><td>'.$rows['fd_recepcao'].'</td><td>'.$rows['produto'].'</td><td><ul><li><a href="#"><img src="images/icons/icon-print.png" alt="" /></a></li><li><a href="#"><img src="images/icons/icon-eye.png" alt="" /></a></li><li><a href="#"><img src="images/icons/icon-save.png" alt="" /></a></li></ul></td></tr>';
+      echo '<tr><td><span class="bullet-green"></span> '.$rows['estado'].'</td><td>'.$rows['fn_id'].'</td><td>'.$rows['fd_recepcao'].'</td><td>'.$rows['produto'].'</td><td><ul><li><a href="getrelatorio.php?id='. $rows['fn_id'] .'"><img src="images/icons/icon-save.png" alt="" /></a></li></ul></td></tr>';
     }
   }
 
